@@ -1,0 +1,79 @@
+<aside
+  id="logo-sidebar"
+  [ngClass]="{
+    'translate-x-0': sidebarOpen,
+    '-translate-x-full': !sidebarOpen
+  }"
+  class="fixed top-0 left-0 z-40 w-64 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0"
+  aria-label="Sidebar"
+>
+  <div class="h-full px-3 py-10 pb-4 overflow-y-auto bg-white">
+    <ul class="space-y-2 font-medium">
+      <li>
+        <span
+          class="flex items-center p-2 text-lg font-semibold text-gray-900 rounded-lg"
+        >
+          <span class="">Departments</span>
+        </span>
+      </li>
+      <li *ngFor="let department of departments">
+        <a
+          href="#"
+          class="flex items-center text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100"
+        >
+          <span class="flex-1 ml-3 whitespace-nowrap">
+            {{ department.name }}</span
+          >
+        </a>
+      </li>
+
+      <li>
+        <span
+          class="flex items-center p-2 text-lg font-semibold text-gray-900 rounded-lg"
+        >
+          <span class="">Offices</span>
+        </span>
+      </li>
+      <li *ngFor="let office of offices">
+        <a
+          href="#"
+          class="flex items-center text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100"
+        >
+          <span class="flex-1 ml-3 whitespace-nowrap">{{ office.name }}</span>
+        </a>
+      </li>
+      <li>
+        <span
+          class="flex items-center p-2 text-lg font-semibold text-gray-900 rounded-lg"
+        >
+          <span class="">Job Titles</span>
+        </span>
+      </li>
+      <li
+        *ngFor="let jobTitle of jobTitles; let i = index"
+        [ngClass]="{ hidden: i >= limit }"
+      >
+        <a
+          href="#"
+          class="flex items-center text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100"
+        >
+          <span class="flex-1 ml-3 whitespace-nowrap">{{ jobTitle.name }}</span>
+        </a>
+      </li>
+      <label
+        class="cursor-pointer underline text-blue mx-2"
+        *ngIf="jobTitles.length > 2 && limit === 2"
+        (click)="showMore()"
+      >
+        View More
+      </label>
+      <label
+        class="cursor-pointer underline text-blue mx-2"
+        *ngIf="limit !== 2"
+        (click)="showLess()"
+      >
+        View Less
+      </label>
+    </ul>
+  </div>
+</aside>

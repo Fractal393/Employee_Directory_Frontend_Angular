@@ -40,3 +40,5 @@ export const jobTitles = [
     name: 'Talent Magnet',
   },
 ];
+
+export const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
