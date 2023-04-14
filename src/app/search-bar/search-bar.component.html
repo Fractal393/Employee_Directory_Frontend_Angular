@@ -1,14 +1,17 @@
 <div
   class="grid lg:grid-cols-4 gap-1 pt-8 sm:grid-cols-1 md:grid-cols-2 justify-around items-center"
+  [formGroup]="searchForm"
 >
   <!-- Search & Input -->
   <div class="flex items-center">
     <label htmlFor="search-query" class="text-black/75 pr-2"> Search </label>
     <div class="relative">
       <input
-        id="search-query"
+        id="searchText"
         type="text"
         placeholder="Enter Any Keyword"
+        (keyup.enter)="handleSearch()"
+        formControlName="searchText"
         class="pl-12 pr-4 py-2 w-full rounded-none border border-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-white"
       />
       <div
@@ -37,17 +40,23 @@
   <div
     class="sm:text-center md:text-center lg:text-left text-center py-3 sm:py-3 md:py-3 lg:py-0"
   >
-    <label class="btn btn-outline text-white bg-green rounded-none">
+    <button
+      class="btn btn-outline text-white bg-green rounded-none"
+      (click)="onClear()"
+    >
       Clear
-    </label>
+    </button>
   </div>
 
   <!-- Filter -->
   <div class="flex pb-3 sm:pb-3 md:pb-3 lg:pb-0">
     <label class="text-black/75 label w-24">Filter By</label>
     <select
+      id="searchBy"
+      formControlName="searchBy"
       class="bg-white text-black select w-44 font-light rounded-none select-bordered focus:outline-none border-[#8D8D8D]"
     >
+      <option value="" disabled>-- Select Filter --</option>
       <option value="firstname">First Name</option>
       <option value="department">Department</option>
       <option value="office">Office</option>

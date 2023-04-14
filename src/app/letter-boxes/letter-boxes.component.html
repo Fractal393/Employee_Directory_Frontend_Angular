@@ -18,6 +18,7 @@
     </label>
     <label
       *ngFor="let alphabet of alphabets"
+      (click)="onClick(alphabet)"
       class="btn btn-outline btn-square text-white bg-blue rounded-none flex-shrink-0 w-[2.7rem] mb-2 md:mb-0"
     >
       {{ alphabet }}

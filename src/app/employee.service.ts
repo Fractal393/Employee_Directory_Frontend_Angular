@@ -43,7 +43,7 @@ export class EmployeeService {
     );
   }
 
-  getEmployees() {
+  getEmployees(): Observable<IEmployee[]> {
     return this.http
       .get<IEmployee[]>(this.baseUrl)
       .pipe(catchError(this.handleError));
@@ -58,5 +58,30 @@ export class EmployeeService {
   deleteEmployee(employeeId: number): Observable<unknown> {
     const url = `${this.baseUrl}/${employeeId}`;
     return this.http.delete(url).pipe(catchError(this.handleError));
+  }
+
+  updateEmployee(updatedEmployee: IEmployee): Observable<IEmployee> {
+    return this.http
+      .put<IEmployee>(this.baseUrl, updatedEmployee)
+      .pipe(catchError(this.handleError));
+  }
+
+  getByAlphabet(alphabet: string): Observable<IEmployee[]> {
+    const url = `${this.baseUrl}?letter=${alphabet}`;
+    return this.http.get<IEmployee[]>(url).pipe(catchError(this.handleError));
+  }
+
+  getBySidebarFilters(
+    department: string,
+    office: string,
+    jobTitle: string
+  ): Observable<IEmployee[]> {
+    const url = `${this.baseUrl}?department=${department}&office=${office}&jobTitle=${jobTitle}`;
+    return this.http.get<IEmployee[]>(url).pipe(catchError(this.handleError));
+  }
+
+  getBySearch(searchText: string, searchBy: string): Observable<IEmployee[]> {
+    const url = `${this.baseUrl}?searchText=${searchText}&searchBy=${searchBy}`;
+    return this.http.get<IEmployee[]>(url).pipe(catchError(this.handleError));
   }
 }

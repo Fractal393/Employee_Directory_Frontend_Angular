@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { departments, jobTitles, offices } from '../model';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',

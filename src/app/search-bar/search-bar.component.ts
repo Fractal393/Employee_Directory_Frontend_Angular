@@ -11,11 +11,17 @@ import { throwError } from 'rxjs';
 })
 export class SearchBarComponent {
   addEmployeeForm: FormGroup;
+  searchForm: FormGroup;
 
   constructor(
     private employeeService: EmployeeService,
     private formBuilder: FormBuilder
   ) {
+    this.searchForm = this.formBuilder.group({
+      searchBy: '',
+      searchText: '',
+    });
+
     this.addEmployeeForm = this.formBuilder.group({
       firstName: '',
       lastName: '',
@@ -23,7 +29,6 @@ export class SearchBarComponent {
       email: '',
       jobTitle: '',
       department: '',
-      // iamgePath: '',
       office: '',
       phoneNumber: '',
       skypeID: '',
@@ -32,6 +37,8 @@ export class SearchBarComponent {
   }
 
   employees: IEmployee[] = [];
+  searchBy: string = '';
+  searchText: string = '';
 
   handleAddEmployee() {
     const newEmployee: IEmployee = this.addEmployeeForm.value;
@@ -41,5 +48,18 @@ export class SearchBarComponent {
         console.log(response);
         this.employees.push(response);
       });
+  }
+
+  handleSearch() {
+    this.employeeService
+      .getBySearch(
+        this.searchForm.value.searchText,
+        this.searchForm.value.searchBy
+      )
+      .subscribe((data: IEmployee[]) => (this.employees = { ...data }));
+  }
+
+  onClear() {
+    this.searchForm.value.searchText = ' awdawd';
   }
 }
