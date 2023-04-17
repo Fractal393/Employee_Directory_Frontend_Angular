@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IEmployee } from '../employee.service';
 import { EmployeeService } from '../employee.service';
 import { Observable } from 'rxjs';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cards',
@@ -16,20 +16,22 @@ export class CardsComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.updateEmployeeForm = this.formBuilder.group({
-      firstName: '',
-      lastName: '',
-      preferredName: null,
-      email: '',
-      jobTitle: '',
-      department: '',
-      office: '',
-      phoneNumber: '',
-      skypeID: '',
-      imagePath: '',
+      employeeId: [, Validators.required],
+      firstName: [''],
+      lastName: [''],
+      preferredName: [, Validators.required],
+      email: [''],
+      jobTitle: [''],
+      department: [''],
+      office: [''],
+      phoneNumber: [''],
+      skypeID: [''],
+      imagePath: [''],
     });
+    this.updateEmployeeForm.patchValue(this.employees);
   }
 
-  employees!: Observable<IEmployee[]>;
+  @Input() employees!: Observable<IEmployee[]>;
 
   isEditing = false;
 
@@ -41,10 +43,10 @@ export class CardsComponent implements OnInit {
     this.employeeService.deleteEmployee(employeeId).subscribe();
   }
 
-  handleUpdate() {
+  handleUpdate(employeeId: number) {
     const updatedEmployee: IEmployee = this.updateEmployeeForm.value;
     this.employeeService
-      .updateEmployee(updatedEmployee)
+      .updateEmployee(updatedEmployee, employeeId)
       .subscribe((response: IEmployee) => {
         console.log(response);
       });

@@ -122,7 +122,7 @@
             </a>
           </div>
 
-          <!-- Details If Else -->
+          <!-- Details if not editing (If) -->
           <div class="py-4 px-6" *ngIf="!isEditing; else editView">
             <h1 class="text-2xl font-semibold text-gray-800 pb-2">
               {{ employee.firstName }} {{ employee.lastName }}
@@ -150,34 +150,73 @@
               <span class="font-semibold">Skype ID</span>:
               {{ employee.skypeID }}
             </p>
+            <div class="flex pt-5 justify-around">
+              <button (click)="toggleEdit()">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-6 h-6 text-black"
+                >
+                  <path
+                    d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z"
+                  />
+                  <path
+                    d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z"
+                  />
+                </svg>
+              </button>
+              <button
+                class="text-red-600"
+                (click)="handleDelete(employee.employeeId)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
 
-          <!-- Else -->
+          <!-- If Editing (Else) -->
           <ng-template #editView>
-            <div class="py-2 px-6 grid grid-cols-3 gap-1">
+            <form
+              class="py-2 px-6 grid grid-cols-3 gap-1"
+              [formGroup]="updateEmployeeForm"
+              (ngSubmit)="handleUpdate(employee.employeeId)"
+            >
               <label class="text-black/75">Profile Picture:</label>
               <input
                 type="file"
                 accept="image/*"
-                name="image"
+                name="imagePath"
+                formControlName="imagePath"
                 class="file-input w-full bg-white rounded-none file:bg-blue file:border-0 file:text-white file-input-bordered font-light text-black border-[#8D8D8D] text-base focus:outline-none col-span-2"
               />
               <label class="text-black/75">First Name:</label>
               <input
                 type="text"
-                value="{{ employee.firstName }}"
+                formControlName="firstName"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
               <label class="text-black/75">Last Name:</label>
               <input
                 type="text"
-                value="{{ employee.lastName }}"
+                formControlName="lastName"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
               <label class="text-black/75">Preferred Name:</label>
               <select
-                value="{{ employee.preferredName }}"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
+                formControlName="preferredName"
               >
                 <option value="0">{{ employee.firstName }}</option>
                 <option value="1">{{ employee.lastName }}</option>
@@ -185,12 +224,12 @@
               <label class="text-black/75">Job Title:</label>
               <input
                 type="text"
-                value="{{ employee.jobTitle }}"
+                formControlName="jobTitle"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
               <label class="text-black/75">Department:</label>
               <select
-                value="{{ employee.department }}"
+                formControlName="department"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               >
                 <option value="IT Department">IT Department</option>
@@ -200,7 +239,7 @@
               </select>
               <label class="text-black/75">Office:</label>
               <select
-                value="{{ employee.office }}"
+                formControlName="office"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               >
                 <option value="Seattle">Seattle</option>
@@ -209,27 +248,77 @@
               <label class="text-black/75">Email:</label>
               <input
                 type="text"
-                value="{{ employee.email }}"
+                formControlName="email"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
               <label class="text-black/75">Phone Number:</label>
               <input
                 type="text"
-                value="{{ employee.phoneNumber }}"
+                formControlName="phoneNumber"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
               <label class="text-black/75">Skype ID:</label>
               <input
                 type="text"
-                value="{{ employee.skypeID }}"
+                formControlName="skypeID"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
-            </div>
+              <div class="flex py-3 justify-around col-span-3">
+                <button type="submit">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="3"
+                    stroke="currentColor"
+                    class="w-6 h-6 text-green"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M4.5 12.75l6 6 9-13.5"
+                    />
+                  </svg>
+                </button>
+                <button (click)="toggleEdit()">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="w-6 h-6 text-black"
+                  >
+                    <path
+                      d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z"
+                    />
+                    <path
+                      d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z"
+                    />
+                  </svg>
+                </button>
+                <button
+                  class="text-red-600"
+                  (click)="handleDelete(employee.employeeId)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </form>
           </ng-template>
 
           <!-- Edit, Delete Icons -->
 
-          <div
+          <!-- <div
             class="flex pb-5 justify-around"
             *ngIf="isEditing; else saveButtonView"
           >
@@ -284,7 +373,7 @@
           </div>
 
           <ng-template #saveButtonView>
-            <div class="flex pb-5 justify-around">
+             <div class="flex pb-5 justify-around">
               <button (click)="toggleEdit()">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -318,7 +407,7 @@
                 </svg>
               </button>
             </div>
-          </ng-template>
+          </ng-template> -->
         </div>
       </div>
     </div>

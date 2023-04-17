@@ -1,0 +1,86 @@
+<div class="pl-96 pt-28">
+  <div class="pb-5 text-4xl text-black w-full h-full">Please Log In</div>
+  <div class="flex flex-col w-96">
+    <form onSubmit="{handleLogin}">
+      <label class="text-black/75">
+        Email:
+        <input
+          type="text"
+          value="{email}"
+          class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
+        />
+      </label>
+      <br />
+      <label class="text-black/75">
+        Password:
+        <input
+          type="password"
+          value="{password}"
+          class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
+        />
+      </label>
+      <br />
+      <button
+        type="submit"
+        class="text-white bg-blue btn btn-outline rounded-none mt-2"
+      >
+        Login
+      </button>
+    </form>
+    <span class="text-black text-base mt-1">
+      <a href="#register-modal" class="underline">
+        Not a User? Click here to Register
+      </a>
+
+      <div class="modal" id="register-modal">
+        <div class="modal-box bg-white rounded-none">
+          <a class="text-red-600 float-right mb-5" href="#">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-8 h-8"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+
+          <form onSubmit="{handleSubmit}">
+            <h2 class="text-black text-xl mb-8">Register User</h2>
+
+            <label class="text-black/75">
+              Email:
+              <input
+                type="text"
+                value="{email}"
+                class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
+              />
+            </label>
+
+            <br />
+            <label class="text-black/75">
+              Password:
+              <input
+                type="password"
+                value="{password}"
+                class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
+              />
+            </label>
+
+            <br />
+            <button
+              type="submit"
+              class="text-white bg-blue btn btn-outline rounded-none mt-2"
+            >
+              Register
+            </button>
+          </form>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>

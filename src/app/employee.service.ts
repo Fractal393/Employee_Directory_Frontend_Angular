@@ -60,9 +60,13 @@ export class EmployeeService {
     return this.http.delete(url).pipe(catchError(this.handleError));
   }
 
-  updateEmployee(updatedEmployee: IEmployee): Observable<IEmployee> {
+  updateEmployee(
+    updatedEmployee: IEmployee,
+    employeeId: number
+  ): Observable<IEmployee> {
+    const url = `${this.baseUrl}/${employeeId}`;
     return this.http
-      .put<IEmployee>(this.baseUrl, updatedEmployee)
+      .put<IEmployee>(url, updatedEmployee)
       .pipe(catchError(this.handleError));
   }
 

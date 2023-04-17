@@ -4,7 +4,7 @@
 >
   <!-- Search & Input -->
   <div class="flex items-center">
-    <label htmlFor="search-query" class="text-black/75 pr-2"> Search </label>
+    <label class="text-black/75 pr-2"> Search </label>
     <div class="relative">
       <input
         id="searchText"
@@ -49,7 +49,7 @@
   </div>
 
   <!-- Filter -->
-  <div class="flex pb-3 sm:pb-3 md:pb-3 lg:pb-0">
+  <div class="flex pb-3 sm:pb-3 md:pb-3 lg:pb-0 items-center">
     <label class="text-black/75 label w-24">Filter By</label>
     <select
       id="searchBy"
@@ -107,6 +107,7 @@
         <div class="col-span-1">
           <label class="text-black/75 label">Preferred Name</label>
           <select
+            type="text"
             class="bg-white text-black select w-full font-light rounded-none select-bordered focus:outline-none border-[#8D8D8D] text-base"
             id="preferredName"
             formControlName="preferredName"
@@ -122,6 +123,7 @@
             type="file"
             accept="image/*"
             id="imagePath"
+            (change)="onFileChange($event)"
             formControlName="imagePath"
             class="file-input w-full bg-white rounded-none file:bg-blue file:border-0 file:text-white file-input-bordered font-light text-black border-[#8D8D8D] text-base focus:outline-none"
           />
@@ -136,6 +138,7 @@
             class="bg-white text-black input w-full font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none"
           />
         </div>
+
         <div class="">
           <label class="text-black/75 label">Job Title</label>
           <input

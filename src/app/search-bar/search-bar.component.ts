@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EmployeeService, IEmployee } from '../employee.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-search-bar',
@@ -25,7 +28,7 @@ export class SearchBarComponent {
     this.addEmployeeForm = this.formBuilder.group({
       firstName: '',
       lastName: '',
-      preferredName: null,
+      preferredName: [, Validators.required],
       email: '',
       jobTitle: '',
       department: '',
@@ -50,6 +53,20 @@ export class SearchBarComponent {
       });
   }
 
+  onFileChange(event: any) {
+    const reader = new FileReader();
+    const file = event.target.files[0];
+
+    reader.onload = (e: any) => {
+      const base64String =
+        'data:image/*;base64,' + e.target.result.split(',')[1];
+      this.addEmployeeForm.patchValue({
+        imagePath: base64String,
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
   handleSearch() {
     this.employeeService
       .getBySearch(
@@ -60,6 +77,7 @@ export class SearchBarComponent {
   }
 
   onClear() {
-    this.searchForm.value.searchText = ' awdawd';
+    console.log(this.searchForm.value.searchText);
+    this.searchForm.value.searchText = '';
   }
 }

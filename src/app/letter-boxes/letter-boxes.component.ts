@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { alphabets } from '../model';
-import { Observable } from 'rxjs';
 import { EmployeeService, IEmployee } from '../employee.service';
 @Component({
   selector: 'app-letter-boxes',
@@ -9,6 +8,9 @@ import { EmployeeService, IEmployee } from '../employee.service';
 })
 export class LetterBoxesComponent {
   constructor(private employeeService: EmployeeService) {}
+
+  @Output() searchResults = new EventEmitter<IEmployee[]>();
+
   alphabets = [...alphabets];
 
   employees!: IEmployee[];
@@ -17,6 +19,7 @@ export class LetterBoxesComponent {
     this.employeeService
       .getByAlphabet(alphabet)
       .subscribe((data: IEmployee[]) => (this.employees = { ...data }));
+    this.searchResults.emit(this.employees);
 
     console.log(this.employees);
   }
