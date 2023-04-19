@@ -7,5 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Employee_Angular';
-  loggedIn: boolean = false;
+  isLoggedIn = false;
+
+  onLoggedIn(loggedIn: boolean) {
+    this.isLoggedIn = loggedIn;
+  }
 }

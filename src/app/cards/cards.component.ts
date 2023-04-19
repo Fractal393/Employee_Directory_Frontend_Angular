@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IEmployee } from '../employee.service';
 import { EmployeeService } from '../employee.service';
 import { Observable } from 'rxjs';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-cards',
@@ -16,18 +16,19 @@ export class CardsComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.updateEmployeeForm = this.formBuilder.group({
-      employeeId: [, Validators.required],
-      firstName: [''],
-      lastName: [''],
-      preferredName: [, Validators.required],
-      email: [''],
-      jobTitle: [''],
-      department: [''],
-      office: [''],
-      phoneNumber: [''],
-      skypeID: [''],
-      imagePath: [''],
+      employeeId: 0,
+      firstName: '',
+      lastName: '',
+      preferredName: null,
+      email: '',
+      jobTitle: '',
+      department: '',
+      office: '',
+      phoneNumber: '',
+      skypeID: '',
+      imagePath: '',
     });
+
     this.updateEmployeeForm.patchValue(this.employees);
   }
 

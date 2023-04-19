@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -6,5 +6,10 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  @Input() loggedIn!: boolean;
+  @Output() loggedIn = new EventEmitter<boolean>();
+  isLoggedIn = false;
+  onClick() {
+    this.isLoggedIn = !this.isLoggedIn;
+    this.loggedIn.emit(this.isLoggedIn);
+  }
 }

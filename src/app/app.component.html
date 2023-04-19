@@ -1,3 +1,4 @@
 <app-navbar></app-navbar>
-<app-body></app-body>
-<!-- <app-login></app-login> -->
+
+<app-body *ngIf="isLoggedIn"></app-body>
+<app-login (loggedIn)="onLoggedIn($event)" *ngIf="!isLoggedIn"></app-login>

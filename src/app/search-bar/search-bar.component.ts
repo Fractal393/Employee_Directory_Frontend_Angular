@@ -28,7 +28,7 @@ export class SearchBarComponent {
     this.addEmployeeForm = this.formBuilder.group({
       firstName: '',
       lastName: '',
-      preferredName: [, Validators.required],
+      preferredName: 0,
       email: '',
       jobTitle: '',
       department: '',
