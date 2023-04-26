@@ -17,6 +17,11 @@ export interface IEmployee {
   imagePath: string;
 }
 
+export interface IUser {
+  email: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -24,26 +29,21 @@ export class EmployeeService {
   constructor(private http: HttpClient) {}
 
   private baseUrl = 'https://localhost:7213/Employees';
+  private lrUrl = 'https://localhost:7213/Users';
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
       console.error(
         `Backend returned code ${error.status}, body was: `,
         error.error
       );
     }
-    // Return an observable with a user-facing error message.
-    return throwError(
-      () => new Error('Something bad happened; please try again later.')
-    );
+    return throwError(() => new Error('Error ccured; please try again later.'));
   }
 
-  getEmployees(): Observable<IEmployee[]> {
+  getEmployees() {
     return this.http
       .get<IEmployee[]>(this.baseUrl)
       .pipe(catchError(this.handleError));
@@ -70,16 +70,12 @@ export class EmployeeService {
       .pipe(catchError(this.handleError));
   }
 
-  getByAlphabet(alphabet: string): Observable<IEmployee[]> {
+  getByAlphabet(alphabet: string) {
     const url = `${this.baseUrl}?letter=${alphabet}`;
     return this.http.get<IEmployee[]>(url).pipe(catchError(this.handleError));
   }
 
-  getBySidebarFilters(
-    department: string,
-    office: string,
-    jobTitle: string
-  ): Observable<IEmployee[]> {
+  getBySidebarFilters(department: string, office: string, jobTitle: string) {
     const url = `${this.baseUrl}?department=${department}&office=${office}&jobTitle=${jobTitle}`;
     return this.http.get<IEmployee[]>(url).pipe(catchError(this.handleError));
   }
@@ -87,5 +83,15 @@ export class EmployeeService {
   getBySearch(searchText: string, searchBy: string): Observable<IEmployee[]> {
     const url = `${this.baseUrl}?searchText=${searchText}&searchBy=${searchBy}`;
     return this.http.get<IEmployee[]>(url).pipe(catchError(this.handleError));
+  }
+
+  register(user: IUser): Observable<any> {
+    const url = `${this.lrUrl}/Register`;
+    return this.http.post(url, user);
+  }
+
+  login(user: IUser): Observable<any> {
+    const url = `${this.lrUrl}/login`;
+    return this.http.post(url, user).pipe(catchError(this.handleError));
   }
 }

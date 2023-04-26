@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { departments, jobTitles, offices } from '../model';
-import { Observable } from 'rxjs';
 import { EmployeeService, IEmployee } from '../employee.service';
+import { DataShareService } from '../data-share.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,7 +9,10 @@ import { EmployeeService, IEmployee } from '../employee.service';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
-  constructor(private employeeService: EmployeeService) {}
+  constructor(
+    private employeeService: EmployeeService,
+    private dataShareService: DataShareService
+  ) {}
   @Input() sidebarOpen!: boolean;
 
   departments = [...departments];
@@ -33,7 +36,10 @@ export class SidebarComponent {
   sidebarFilter(department: string, office: string, jobTitle: string) {
     this.employeeService
       .getBySidebarFilters(department, office, jobTitle)
-      .subscribe((data: IEmployee[]) => (this.employees = { ...data }));
+      .subscribe((data: IEmployee[]) => {
+        this.employees = { ...data };
+        this.dataShareService.setData(data);
+      });
   }
 }
 

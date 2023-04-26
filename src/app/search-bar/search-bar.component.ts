@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { EmployeeService, IEmployee } from '../employee.service';
 import {
   FormBuilder,
@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { BodyComponent } from '../body/body.component';
 
 @Component({
   selector: 'app-search-bar',
@@ -16,41 +17,44 @@ export class SearchBarComponent {
   addEmployeeForm: FormGroup;
   searchForm: FormGroup;
 
+  @Input() bodyComponent!: BodyComponent;
+
   constructor(
     private employeeService: EmployeeService,
     private formBuilder: FormBuilder
   ) {
     this.searchForm = this.formBuilder.group({
-      searchBy: '',
-      searchText: '',
+      searchBy: [''],
+      searchText: [''],
     });
 
     this.addEmployeeForm = this.formBuilder.group({
-      firstName: '',
-      lastName: '',
-      preferredName: 0,
-      email: '',
-      jobTitle: '',
-      department: '',
-      office: '',
-      phoneNumber: '',
-      skypeID: '',
-      imagePath: '',
+      firstName: [''],
+      lastName: [''],
+      preferredName: [0],
+      email: ['', [Validators.email]],
+      jobTitle: [''],
+      department: [''],
+      office: [''],
+      phoneNumber: ['', [Validators.pattern(/^\d+$/)]],
+      skypeID: [''],
+      imagePath: [''],
     });
   }
 
   employees: IEmployee[] = [];
-  searchBy: string = '';
-  searchText: string = '';
 
   handleAddEmployee() {
-    const newEmployee: IEmployee = this.addEmployeeForm.value;
-    this.employeeService
-      .addEmployees(newEmployee)
-      .subscribe((response: IEmployee) => {
-        console.log(response);
-        this.employees.push(response);
+    if (this.addEmployeeForm.valid) {
+      const newEmployee: IEmployee = this.addEmployeeForm.value;
+      this.employeeService.addEmployees(newEmployee).subscribe(() => {
+        this.employeeService
+          .getEmployees()
+          .subscribe((response: IEmployee[]) => {
+            this.bodyComponent.onSearchResults(response);
+          });
       });
+    }
   }
 
   onFileChange(event: any) {
@@ -73,7 +77,9 @@ export class SearchBarComponent {
         this.searchForm.value.searchText,
         this.searchForm.value.searchBy
       )
-      .subscribe((data: IEmployee[]) => (this.employees = { ...data }));
+      .subscribe((data: IEmployee[]) =>
+        this.bodyComponent.onSearchResults(data)
+      );
   }
 
   onClear() {

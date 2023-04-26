@@ -1,4 +1,5 @@
 <app-navbar></app-navbar>
-
-<app-body *ngIf="isLoggedIn"></app-body>
-<app-login (loggedIn)="onLoggedIn($event)" *ngIf="!isLoggedIn"></app-login>
+<app-body [appComponent]="this" *ngIf="isLoggedIn; else loginView"></app-body>
+<ng-template #loginView>
+  <app-login [appComponent]="this"></app-login>
+</ng-template>

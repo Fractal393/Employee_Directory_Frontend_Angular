@@ -1,11 +1,12 @@
-<div class="pl-96 pt-28">
+<div class="pl-96 pt-28 custom-pl-1 custom-pl-2">
   <div class="pb-5 text-4xl text-black w-full h-full">Please Log In</div>
   <div class="flex flex-col w-96">
-    <form>
+    <form [formGroup]="userForm" (ngSubmit)="handleLogin()">
       <label class="text-black/75">
         Email:
         <input
           type="text"
+          formControlName="email"
           class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
         />
       </label>
@@ -14,13 +15,14 @@
         Password:
         <input
           type="password"
+          formControlName="password"
           class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
         />
       </label>
       <br />
       <button
         class="text-white bg-blue btn btn-outline rounded-none mt-2"
-        (click)="onClick()"
+        type="submit"
       >
         Login
       </button>
@@ -47,13 +49,14 @@
             </svg>
           </a>
 
-          <form>
+          <form [formGroup]="userForm" (ngSubmit)="handleRegister()">
             <h2 class="text-black text-xl mb-8">Register User</h2>
 
             <label class="text-black/75">
               Email:
               <input
                 type="text"
+                formControlName="email"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
             </label>
@@ -63,12 +66,14 @@
               Password:
               <input
                 type="password"
+                formControlName="password"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
             </label>
 
             <br />
             <button
+              type="submit"
               class="text-white bg-blue btn btn-outline rounded-none mt-2"
             >
               Register
