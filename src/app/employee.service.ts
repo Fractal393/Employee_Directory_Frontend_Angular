@@ -64,6 +64,7 @@ export class EmployeeService {
     updatedEmployee: IEmployee,
     employeeId: number
   ): Observable<IEmployee> {
+    //console.log(updatedEmployee);
     const url = `${this.baseUrl}/${employeeId}`;
     return this.http
       .put<IEmployee>(url, updatedEmployee)

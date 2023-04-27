@@ -14,12 +14,18 @@ export class CardsComponent implements OnInit {
   isEditing = false;
   @Input() employees!: IEmployee[];
 
+  preferredName = [
+    { name: 'First Name', value: 0 },
+    { name: 'Last Name', value: 1 },
+  ];
+
   constructor(
     private employeeService: EmployeeService,
     private formBuilder: FormBuilder,
     private dataShareService: DataShareService
   ) {
     this.updateEmployeeForm = this.formBuilder.group({
+      employeeId: [0],
       firstName: [''],
       lastName: [''],
       preferredName: [0],
@@ -27,11 +33,13 @@ export class CardsComponent implements OnInit {
       jobTitle: [''],
       department: [''],
       office: [''],
-      phoneNumber: ['', [Validators.pattern(/^\d+$/)]],
+      phoneNumber: [
+        '',
+        [Validators.pattern(/^\d+$/), Validators.maxLength(10)],
+      ],
       skypeID: [''],
       imagePath: [''],
     });
-    // this.updateEmployeeForm.patchValue(this.employees);
   }
 
   ngOnInit() {
@@ -57,7 +65,7 @@ export class CardsComponent implements OnInit {
 
   handleUpdate(employeeId: number) {
     if (this.updateEmployeeForm.valid) {
-      this.updateEmployeeForm.patchValue(this.employees);
+      this.updateEmployeeForm.patchValue({ employeeId: employeeId });
       const updatedEmployee: IEmployee = this.updateEmployeeForm.value;
       this.employeeService
         .updateEmployee(updatedEmployee, employeeId)

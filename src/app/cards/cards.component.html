@@ -193,43 +193,48 @@
               [formGroup]="updateEmployeeForm"
               (ngSubmit)="handleUpdate(employee.employeeId)"
             >
-              <label class="text-black/75">Profile Picture:</label>
+              <label>Profile Picture:</label>
               <input
                 type="file"
                 accept="image/*"
                 name="imagePath"
-                formControlName="imagePath"
                 class="file-input w-full bg-white rounded-none file:bg-blue file:border-0 file:text-white file-input-bordered font-light text-black border-[#8D8D8D] text-base focus:outline-none col-span-2"
               />
-              <label class="text-black/75">First Name:</label>
+              <label>First Name:</label>
               <input
                 type="text"
+                id="firstName"
+                [value]="employee.firstName"
                 formControlName="firstName"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
-              <label class="text-black/75">Last Name:</label>
+              <label>Last Name:</label>
               <input
                 type="text"
                 formControlName="lastName"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
-              <label class="text-black/75">Preferred Name:</label>
+              <label>Preferred Name:</label>
               <select
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
+                [value]="employee.preferredName"
                 formControlName="preferredName"
               >
-                <option value="0">{{ employee.firstName }}</option>
-                <option value="1">{{ employee.lastName }}</option>
+                <option *ngFor="let i of preferredName" [ngValue]="i.value">
+                  {{ i.name }}
+                </option>
               </select>
-              <label class="text-black/75">Job Title:</label>
+              <label>Job Title:</label>
               <input
                 type="text"
+                [value]="employee.jobTitle"
                 formControlName="jobTitle"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
-              <label class="text-black/75">Department:</label>
+              <label>Department:</label>
               <select
                 formControlName="department"
+                [value]="employee.department"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               >
                 <option value="IT Department">IT Department</option>
@@ -237,29 +242,33 @@
                 <option value="MD">MD</option>
                 <option value="Sales">Sales</option>
               </select>
-              <label class="text-black/75">Office:</label>
+              <label>Office:</label>
               <select
+                [value]="employee.office"
                 formControlName="office"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               >
                 <option value="Seattle">Seattle</option>
                 <option value="India">India</option>
               </select>
-              <label class="text-black/75">Email:</label>
+              <label>Email:</label>
               <input
                 type="text"
+                [value]="employee.email"
                 formControlName="email"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
-              <label class="text-black/75">Phone Number:</label>
+              <label>Phone Number:</label>
               <input
                 type="text"
+                [value]="employee.phoneNumber"
                 formControlName="phoneNumber"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />
-              <label class="text-black/75">Skype ID:</label>
+              <label>Skype ID:</label>
               <input
                 type="text"
+                [value]="employee.skypeID"
                 formControlName="skypeID"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />

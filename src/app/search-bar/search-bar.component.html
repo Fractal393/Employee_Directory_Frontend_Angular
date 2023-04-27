@@ -112,8 +112,9 @@
             id="preferredName"
             formControlName="preferredName"
           >
-            <option value="0">First Name</option>
-            <option value="1">Last Name</option>
+            <option *ngFor="let i of preferredName" [ngValue]="i.value">
+              {{ i.name }}
+            </option>
           </select>
         </div>
 

@@ -19,6 +19,11 @@ export class SearchBarComponent {
 
   @Input() bodyComponent!: BodyComponent;
 
+  preferredName = [
+    { name: 'First Name', value: 0 },
+    { name: 'Last Name', value: 1 },
+  ];
+
   constructor(
     private employeeService: EmployeeService,
     private formBuilder: FormBuilder
@@ -36,7 +41,10 @@ export class SearchBarComponent {
       jobTitle: [''],
       department: [''],
       office: [''],
-      phoneNumber: ['', [Validators.pattern(/^\d+$/)]],
+      phoneNumber: [
+        '',
+        [Validators.pattern(/^\d+$/), Validators.maxLength(10)],
+      ],
       skypeID: [''],
       imagePath: [''],
     });
