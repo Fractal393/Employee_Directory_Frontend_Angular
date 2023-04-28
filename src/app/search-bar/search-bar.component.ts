@@ -62,6 +62,7 @@ export class SearchBarComponent {
             this.bodyComponent.onSearchResults(response);
           });
       });
+      this.addEmployeeForm.reset();
     }
   }
 
@@ -91,7 +92,6 @@ export class SearchBarComponent {
   }
 
   onClear() {
-    console.log(this.searchForm.value.searchText);
-    this.searchForm.value.searchText = '';
+    this.searchForm.reset();
   }
 }

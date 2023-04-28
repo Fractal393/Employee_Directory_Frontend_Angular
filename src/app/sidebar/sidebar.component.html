@@ -19,7 +19,7 @@
       <li *ngFor="let department of departments">
         <button
           (click)="sidebarFilter(department.name, ' ', ' ')"
-          class="flex items-center text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 w-full text-left"
+          class="flex items-center text-base font-normal focus:bg-gray-300 text-gray-900 rounded-lg hover:bg-gray-100 w-full text-left"
         >
           <span class="flex-1 ml-3 whitespace-nowrap">
             {{ department.name }}</span

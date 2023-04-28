@@ -191,20 +191,21 @@
             <form
               class="py-2 px-6 grid grid-cols-3 gap-1"
               [formGroup]="updateEmployeeForm"
-              (ngSubmit)="handleUpdate(employee.employeeId)"
+              (ngSubmit)="handleUpdate(employee)"
             >
               <label>Profile Picture:</label>
               <input
                 type="file"
                 accept="image/*"
                 name="imagePath"
+                (change)="onFileChange($event)"
                 class="file-input w-full bg-white rounded-none file:bg-blue file:border-0 file:text-white file-input-bordered font-light text-black border-[#8D8D8D] text-base focus:outline-none col-span-2"
               />
               <label>First Name:</label>
               <input
                 type="text"
                 id="firstName"
-                [value]="employee.firstName"
+                value="{{ employee.firstName }}"
                 formControlName="firstName"
                 class="bg-white col-span-2 text-black input font-light rounded-none input-bordered border-[#8D8D8D] focus:outline-none w-full"
               />

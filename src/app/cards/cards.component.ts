@@ -63,15 +63,34 @@ export class CardsComponent implements OnInit {
     });
   }
 
-  handleUpdate(employeeId: number) {
+  onFileChange(event: any) {
+    const reader = new FileReader();
+    const file = event.target.files[0];
+
+    reader.onload = (e: any) => {
+      const base64String =
+        'data:image/*;base64,' + e.target.result.split(',')[1];
+      this.updateEmployeeForm.patchValue({
+        imagePath: base64String,
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  handleUpdate(employee: IEmployee) {
     if (this.updateEmployeeForm.valid) {
-      this.updateEmployeeForm.patchValue({ employeeId: employeeId });
+      this.updateEmployeeForm.patchValue({ employeeId: employee.employeeId });
       const updatedEmployee: IEmployee = this.updateEmployeeForm.value;
       this.employeeService
-        .updateEmployee(updatedEmployee, employeeId)
-        .subscribe((response: IEmployee) => {
-          console.log(response);
+        .updateEmployee(updatedEmployee, employee.employeeId)
+        .subscribe(() => {
+          this.employeeService
+            .getEmployees()
+            .subscribe((response: IEmployee[]) => {
+              this.employees = response;
+            });
         });
+      this.updateEmployeeForm.reset();
     }
   }
 }
